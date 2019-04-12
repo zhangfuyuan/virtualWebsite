@@ -1,0 +1,112 @@
+seajs.config({
+    base: './',
+    alias: {
+        'cookie': 'libs/jquery/jquery.cookie.js',
+        'seajs-debug': 'libs/sea/seajs-debug',
+        'seajs-combo': 'libs/sea/seajs-combo',
+        'seajs-log': 'libs/sea/seajs-log',
+        'seajs-text': 'libs/sea/seajs-text',
+		
+    },
+    preload: [
+        'seajs-text', 'seajs-log',
+		 '../static/js/app/qrcode/utf.js', 
+		 '../static/js/app/qrcode/jquery.qrcode.js'
+    ],
+	map: [
+			['.js', '.js?v20180315'],
+			['.css', '.css?v20170105']
+		],
+});
+/*
+window.onerror = function(sMessage,sUrl,sLine){
+	alert('message'+sMessage+'\n'+'url'+sUrl+'\n'+'line'+sLine+'\n');
+};
+*/
+
+var loginCode = [];
+var doaminInfo =  window.location.hostname.split('.');
+var host_env  = '';
+if(doaminInfo.length > 3){
+	host_env = doaminInfo[doaminInfo.length - 3];
+}
+host_env = host_env ? host_env + '_' : '';
+
+
+
+var isInShell = false;
+function checkInShell(){
+    seajs.use('modules/proxy',function(p){
+    	if(p.isEbagShell()){
+    		$('#box-login .proxy').show();
+    		$.cookie(host_env + 'ebag_proxy',0,{path: '/ebag',expires:365,domain: '.anoah.com'});
+    		isInShell = true;
+    		loginCode.push('A');
+    	}
+    });
+};
+
+
+//F6
+document.addEventListener('keydown', function(e) {
+	if(e.keyCode  == 117){
+		alert(loginCode.toString());
+	}
+}, false);  
+
+
+$(function(){
+		seajs.use(['config/config', 
+		           'modules/global',
+		           'modules/user',
+                   'modules/login-with-QR',
+		           'cookie', 
+		           'css/sys-check.css',
+                   'css/login-with-QR.css'], 
+		function(cfg, global, user, loginWithQR)
+		{
+			function getQueryString(name) {
+				var reg = new RegExp("(\\?|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.match(reg);
+				if (r != null) return unescape(r[2]); return '';
+			};
+			
+			function toStarPage(isProxy){
+				if(isProxy){
+					$.cookie(host_env + 'ebag_proxy', 1, {path: '/ebag',expires:365,domain: '.anoah.com'});
+				}else{
+					$.cookie(host_env + 'ebag_proxy', 0, {path: '/ebag',expires:365,domain: '.anoah.com'});
+				}
+		    	var goBack = getQueryString('goBack') ? getQueryString('goBack') : config.goBackUrl;
+                
+                var temp_s = document.createElement('a');
+                temp_s.href=goBack;
+                temp_m = temp_s.href;
+                var goBack_e = temp_m.replace(/http:\/\/www\./,'http://e.');
+		    	location.href = goBack_e+'&loginCode='+loginCode.toString();
+		    	//console.log(goBack);
+			};
+		
+		    user.getIsLogin(function(userInfo){
+		    	var useProxy = $('#box-login').find('input[name=proxy]:checked').length;
+		    	if(useProxy){
+		    		//取用户代理服务器信息
+		    		var schoolId = userInfo.schoolId;
+		    		loginCode.push('B');
+		    		user.getUserProxy(schoolId,function(proxyInfo){
+		    			if(!proxyInfo) { toStarPage();return false;}
+		    			seajs.use('modules/proxy',function(proxy){
+			    			proxy.starProxy(proxyInfo,toStarPage);
+		    			});
+		    		});
+		    	}else{
+		    		toStarPage();
+		    	};
+		    	
+		    });
+
+            // 二维码登录
+            loginWithQR.init();
+		    
+		});
+});

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://e.anoah.com/ebag/user/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>优学派智慧课堂-备课平台</title>
+<link href="./index_files/common.css" media="all" rel="stylesheet" type="text/css">
+<link href="./index_files/login.css" media="all" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./index_files/jquery-2.0.3.min.js.下载"></script>
+<script type="text/javascript" src="./index_files/underscore-min.js.下载"></script>
+<script type="text/javascript" src="./index_files/sea.js.下载" id="seajsnode"></script>
+<script type="text/javascript" src="./index_files/kw.js.下载"></script>
+<script type="text/javascript" src="./index_files/init.js.下载"></script>
+<script type="text/javascript" src="./index_files/sys-check.js.下载"></script>
+<script type="text/javascript" src="anoah://app/js/sys.browser.js"></script>
+<script type="text/javascript" src="./index_files/utf.js.下载"></script>
+<script type="text/javascript" src="./index_files/jquery.qrcode.js.下载"></script>
+
+<link charset="utf-8" rel="stylesheet" href="./index_files/sys-check.css"><link charset="utf-8" rel="stylesheet" href="./index_files/login-with-QR.css"></head>
+<body onload="checkInShell();" style="">
+    <div id="full_container"></div>  
+    <!--对话框容器-->
+    <div class="dialog-base abs l0 t0 wall hall dn" _tk="$(this).empty().removeClass(&#39;dialog-mask-white dialog-mask-black&#39;);"></div>
+    
+    <a href="javascript:void(0);" id="btn-open-QR">服务支持</a>
+
+<script type="text/javascript">
+    if( window.anbjsquery != null && anbrowser){
+        anbrowser.setControlVisible('btn_ex_back', true);
+        window.location.href = '/ebag/index-custom-made.php';
+        $('.foot-box').hide();
+    }
+    function cookie(key,value,options){
+        if(typeof value !== "undefined"){//write
+           options=options||{}
+           var cookie=encodeURIComponent(key)+"="+encodeURIComponent(value);
+    　　　　if (typeof options.expries==="number"){
+    　　　　　　　var date=new Date();
+    　　　　　　　date.setDate(date.getDate()+options.expries);
+    　　　　　　　cookie += ";expries="+date.toUTCString();
+    　　　　}
+    　　　　if(options.path)
+    　　　　　　　cookie += ";path="+options.path;
+           if(options.domain)
+    　　　　　　　cookie += ";domain="+options.domain;
+    　　　　if(options.secure)
+    　　　　　　　cookie += ";secure";
+    　　　　document.cookie=cookie;
+        }else{//read
+    　　　　var cookies=document.cookie.split(";");
+    　　　　for(var i=0;i<cookies.length;i++){
+    　　　　     var cookie=cookies[i].split("=");
+                var name=decodeURIComponent(cookie.shift()).replace(/(^\s*)|(\s*$)/g, '');
+    　　　　     if (name===key)
+    　　　　　　       return decodeURIComponent(cookie.join("="));
+          }
+          return null;
+        }
+    }
+    if (cookie('from') === 'yg') {
+        window.location.href = '/ebag/index-yg-mode.php';
+    }
+    // www.anoah.com/ebag/user/index.html 重定向到 e.anoah.com/ebag/user/index.html
+    if( location.href.indexOf('www.') > -1){
+        location.href = location.href.replace('www.', 'e.');
+    }
+</script>
+<div id="box-login">
+	<div class="content">
+		<div class="wrap_content">
+		    <div class="input-mask">
+		    	<ul class="row-flex">
+		    		<li class="tab-nav active col-flex-1" c="box-qrcode-login"><span>扫码登录</span></li>
+		    		<li class="tab-nav col-flex-1" c="box-psd-login"><span>账号登录</span></li>
+		    	</ul>
+		    </div>
+		    <div class="box-qrcode-login tab-panel active" id="container-qrcode-login"><!-- 二维码展示区域 -->
+<style type="text/css">
+    #container-qrcode-login .hk-vertical-middle{
+    }
+    #container-qrcode-login .tips-success-img{
+        margin: 10px auto;
+        width: 124px;
+        height: 124px;
+        background-image: url(/ebag/static/images/login-with-QR/tips-success-img.png);
+    }
+    #container-qrcode-login .tips-success-box{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #fff;
+    }
+    #container-qrcode-login .qr-img-box{
+        position: relative;
+        width: 140px;
+        height: 140px;
+        display: inline-block;
+    }
+    #container-qrcode-login .qr-img-box.center{
+        display: block;
+        margin: 0 auto;
+        width: 160px;
+        height: 160px;
+        position: relative;
+    }
+    #container-qrcode-login .qr-img-box.center + .tips-scan{
+        display: none;
+    }
+    img.tips-scan{
+        width: 115px;
+        height: 150px;
+        margin-left: 10px;
+        vertical-align: baseline;
+    }
+    .txt-center{
+        text-align: center;
+    }
+    #qrcode-canvas,
+    #qrcode-canvas canvas{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div class="nav-bar txt-center">
+    <span class="txt-red" id="count-down-time" style="">39s</span>
+</div>
+<div class="txt-center" style="position: relative;">
+    <div class="qr-img-box" style="">
+        <!-- <img width="100%" height="100%" src="" alt="二维码" id="qr-img" style="display: none;" /> -->
+        <div id="qrcode-canvas"><canvas width="256" height="256"></canvas></div>
+        <p class="txt-center fail" style="display: none;">获取二维码失败！</p>
+        <div class="invalid-shadow" style="display: none;position: absolute;width: 100%;height: 100%;top: 0;left: 0;background: rgba(255, 255, 255, .9);font-weight: bold;">
+            <div class="txt-center txt-18" style="margin-top: 50px;">
+                <p class="txt-red invalid">二维码失效</p>
+                <p class="txt-blue txt-underline"><a href="javascript:void(0);" id="btn-fresh-qr">点击刷新</a></p>
+            </div>
+        </div>
+    </div>
+    <img class="tips-scan" src="./index_files/tips-scan.png" alt="扫码提示">
+    <div class="txt-center tips-text-box">
+        <p class="txt-18 txt-bold">手机扫描 安全登录</p>
+        <p class="txt-12 txt-grey">（请使用 优学派智慧课堂教师APP 扫一扫完成登录）</p>
+    </div>
+    <div class="tips-success-box txt-center" style="display: none;">
+        <div class="tips-success-img"></div>
+        <p><i class="hk-icon hk-icon-success txt-16"></i><span>扫描成功</span></p>
+        <p class="txt-14 txt-grey">请在手机上确认登录</p>
+    </div>
+</div></div>
+		    <div class="box-psd-login tab-panel">
+				<div class="input-mask"><input type="text" class="username" name="username" placeholder="帐号" autocomplete="off"><div id="login-history-name" style="left: 0px; margin-top: 0px; width: 284px; display: none;"></div></div>
+				<div class="input-mask"><input type="password" class="password" name="password" placeholder="密码"></div>
+				<label class="input-control checkbox" style="width: 100%;">
+					<input type="checkbox" name="remember">  <span class="helper">记住密码</span> <a href="https://e.anoah.com/index.php?r=changepsw/checkuser&amp;userType=teacher" class="find-password">忘记密码?</a>
+				</label>
+			    <label class="input-control checkbox proxy" style="display:none;">
+	                <input type="checkbox" name="proxy" checked="checked">  <span class="helper">使用代理</span>
+	            </label>
+				<div class="input-mask"><input type="button" value="登录" class="btn btn-primary btn-large loginbtn"></div>	
+			</div>
+			<div class="foot-box">
+			<div class="app_qrcode"><i></i><span>下载教师端</span>
+				<div class="qrcode_box">
+					<div class="tit"><span class="green">扫一扫</span><span>，下载老师端</span></div>
+					<div id="teacher_common_app_qrcode">
+					<canvas width="224" height="224"></canvas></div>
+				</div>
+			</div>
+			<a href="javascript:void(0);" class="sys-check-btn"></a>
+			</div>
+
+		</div>
+	</div>
+</div>
+<ul id="login" class="bannar">
+	<li class="fisrt"><img src="./index_files/bg02.png"></li>
+</ul>
+<div class="cooy"><p class="copyright">Copyright © 2009-2014 anoah.com. All rights reserved. 版权所有  优学派智慧课堂 </p></div>
+<script type="text/javascript">
+	$('.tab-nav').on('click', function (e) {
+		var $target = $(e.currentTarget),
+			class_name = $target.attr('c');
+
+		$('.tab-panel').hide()
+						.filter('.' + class_name)
+						.show();
+		
+		if($target.hasClass('active')) return;
+
+		$target.addClass('active')
+				.siblings()
+				.removeClass('active');		
+
+		if( typeof window.__qrcodeLogin === 'undefined') return;				
+
+		if(class_name == 'box-qrcode-login'){
+			window.__qrcodeLogin.start();
+		}else{
+			window.__qrcodeLogin.reset();
+		}				
+	})
+</script><div class="hk-pop-shadow" style="display: none;" id="qr-module">
+	<div class="hk-pop-container hk-vertical-middle">
+		<div id="qr-box">
+			<div class="nav-bar txt-center">
+				<span class="txt-red" id="count-down-time" style="display: none;">60S</span>
+				<span class="hk-icon hk-icon-close hk-icon-20"></span>
+			</div>
+			<div class="content">
+				<div class="qr-img-box">
+					<img width="100%" height="100%" src="./index_files/2934349b033b5bb571dc8c5133d3d539b600bc12.jpg" alt="二维码" id="qr-img">
+					<div class="invalid-shadow" style="display: none;">
+						<div class="txt-center txt-18 hk-vertical-middle">
+							<p class="txt-red">二维码失效</p>
+							<p class="txt-blue txt-underline"><a href="javascript:void(0);" id="btn-fresh-qr">点击刷新</a></p>
+						</div>
+					</div>
+				</div>
+				<div class="txt-center tips-text-box">
+					<p class="txt-18 txt-bold">服务支持&nbsp;&nbsp;扫码登录</p>
+					<p class="txt-12 txt-grey">（请使用 优学派服务与支持APP 扫一扫完成登录）</p>
+				</div>
+				<div class="tips-success-box txt-center" style="display: none;">
+					<div class="tips-success-img"></div>
+					<p><i class="hk-icon hk-icon-success txt-16"></i><span>扫描成功</span></p>
+					<p class="txt-14 txt-grey">请在手机上确认登录</p>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div></body></html>

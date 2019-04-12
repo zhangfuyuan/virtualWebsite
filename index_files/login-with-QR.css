@@ -1,0 +1,153 @@
+/* 扫码登录样式 */
+
+.txt-center{
+    text-align: center;
+}
+.txt-bold{
+    font-weight: bold;
+}
+.txt-grey{
+    color: #7f7f7f;
+}
+.txt-red{
+    color: #f61b08;
+}
+.txt-blue{
+    color: #1d62bd;
+}
+.txt-underline{
+    text-decoration: underline;
+}
+.txt-12{
+    font-size: 12px;
+}
+.txt-14{
+    font-size: 14px;
+    line-height: 1;
+}
+.txt-16{
+    font-size: 16px;
+    line-height: 1.2;
+}
+.txt-18{
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.hk-vertical-middle{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.hk-pop-shadow{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    z-index: 99;
+}
+.hk-pop-container{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+#btn-open-QR{
+    position: fixed;
+    right: 20px;
+    bottom: 130px;
+    z-index: 100;
+    color: #6a7d8c;
+}
+
+.hk-icon{
+    display: inline-block;
+}
+.hk-icon-20{
+    width: 20px;
+    height: 20px;
+}
+.hk-icon-close{
+    background-image: url(../../static/images/login-with-QR/icon-close.png);
+}
+.hk-icon-close:hover{
+    background-image: url(../../static/images/login-with-QR/icon-close-hover.png);
+}
+.hk-icon-success{
+    width: 22px;
+    height: 16px;
+    background-image: url(../../static/images/login-with-QR/icon-success.png);
+}
+
+#qr-box{
+    position: relative;
+    width: 320px;
+    margin: 0 auto;
+    border-radius: 8px;
+    background-color: #fff;
+}
+#qr-box .content{
+    position: relative;
+    /*样式冲突 */
+    width: auto;
+    right: 0;
+    background-color: transparent;
+}
+#qr-box .nav-bar{
+    height: 40px;
+    line-height: 40px;
+}
+#qr-box .nav-bar .hk-icon-close{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+}
+#qr-box .qr-img-box{
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+}
+#qr-box .tips-text-box{
+    padding-bottom: 10px;
+}
+#qr-box .invalid-shadow{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .9);
+}
+#qr-box .tips-success-box{
+    position: absolute;
+    top: -1px;
+    padding-top: 25px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+#qr-box .tips-success-box p{
+    margin: 17px 0;
+}
+#qr-box .invalid-shadow > div.txt-center{
+    width: 100%;
+}
+#qr-box .tips-success-img{
+    margin: 0 auto;
+    width: 124px;
+    height: 124px;
+    background-image: url(../../static/images/login-with-QR/tips-success-img.png);
+}
+
+#qr-box .invalid-shadow p{
+    margin: 10px 0;
+}
+#qr-box p{
+    margin: 6px 0;
+}
+#btn-fresh-qr{
+    color: #1759d5;
+}
+
